@@ -45,11 +45,10 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerCliente(@PathVariable Long id) {
-        if (service.existeCliente(id)) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<String> removerCliente(@PathVariable Long id) {
+        if (!service.excluirCliente(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
         }
-        service.excluirCliente(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.OK).body("Cliente excluído com sucesso!");
     }
 }

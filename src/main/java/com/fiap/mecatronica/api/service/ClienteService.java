@@ -34,7 +34,12 @@ public class ClienteService {
         return !repository.existsById(id);
     }
 
-    public void excluirCliente(Long id) {
-        repository.deleteById(id);
-    } }
+    public boolean excluirCliente(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true; // Indica que foi excluído com sucesso
+        }
+        return false; // Indica que o cliente não foi encontrado
+    }
+}
 
